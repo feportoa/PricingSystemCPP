@@ -23,22 +23,24 @@ int main()
     // Process the option chosen by the user
     if(userChosenOption == 1){ // Problems handling float/double injection
         unsigned int clientNumberOfRooms {0}; 
-        float serviceValue {0.0F};
+        float serviceTotalValue {0.0F};
         std::string userPaymentConfirmation {"Y"};
 
         std::cout << "Type the number of rooms you need a Ultra Carpet Clean: ";
 
         // Checks if clientNumberOfRooms is an int and then proceeds
         if(std::cin >> clientNumberOfRooms){ // Problems handling float/double injection
-            serviceValue = Rooms(clientNumberOfRooms);
-            std::cout << "The total value is: " << serviceValue << ". Would you like to confirm?" << std::endl;
+            serviceTotalValue = Rooms(clientNumberOfRooms);
+            std::cout << "Cost: $" << clientNumberOfRooms * chargePerRoom << "\n";
+            std::cout << "Sales tax: $" << (clientNumberOfRooms * chargePerRoom) * 0.06 << "\n";
+            std::cout << "The total value is: " << serviceTotalValue << ". Would you like to confirm?\n";
             std::cout << "Yes[Y] or No[N]" << std::endl;
             
             // Checks if user payment confirmation is Y or YES to proceed to payment session
             if(std::cin >> userPaymentConfirmation){
                 if(toUpperCase(userPaymentConfirmation) == "Y" || toUpperCase(userPaymentConfirmation) == "YES"){
                     std::cout << "Redirecting user..." << std::endl;
-                    system("xdg-open https://github.com/feportoa");
+                    system("xdg-open https://github.com/feportoa/PricingSystemCPP");
                 } else if(toUpperCase(userPaymentConfirmation) == "N" || toUpperCase(userPaymentConfirmation) == "NO") {
                     // Ends the program in case of N or NO
                     std::cout << "Closing process" << std::endl;
