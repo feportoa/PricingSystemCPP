@@ -3,10 +3,12 @@
 #include <cstdlib>
 #include <cmath>
 
-const float chargePerRoom {30};
-const float salesTax {1.06}; // 6% fee (6 /100 = 0.06 + 100% = 1.06)
+const float chargePerSmallRoom {25};
+const float chargePerLargeRoom {35};
+const float salesTax {0.06};
+const int estimateValidity {30};
 
-float Rooms(unsigned int rooms);
+float Total(unsigned int smallRooms, unsigned int largeRooms);
 std::string toUpperCase(std::string str);
 
 int main()
@@ -22,20 +24,29 @@ int main()
     system("clear");
     // Process the option chosen by the user
     if(userChosenOption == 1){ // Problems handling float/double injection
-        unsigned int clientNumberOfRooms {0}; 
-        float serviceTotalValue {0.0F};
+        unsigned int clientNumberOfSmallRooms {0}; 
+        unsigned int clientNumberOfLargeRooms {0};
+        float cost {0};
         std::string userPaymentConfirmation {"Y"};
 
-        std::cout << "Type the number of rooms you need a Ultra Carpet Clean: ";
+        std::cout << "Type the number of small rooms you need an Ultra Carpet Clean: ";
 
-        // Checks if clientNumberOfRooms is an int and then proceeds
-        if(std::cin >> clientNumberOfRooms){ // Problems handling float/double injection
-            serviceTotalValue = Rooms(clientNumberOfRooms);
-            std::cout << "Cost: $" << clientNumberOfRooms * chargePerRoom << "\n";
-            std::cout << "Sales tax: $" << (clientNumberOfRooms * chargePerRoom) * 0.06 << "\n";
-            std::cout << "The total value is: " << serviceTotalValue << ". Would you like to confirm?\n";
-            std::cout << "Yes[Y] or No[N]" << std::endl;
-            
+        // Checks if clientNumberOfSmallRooms is an int and then proceeds
+        if(std::cin >> clientNumberOfSmallRooms){ // Problems handling float/double injection
+            std::cout << "Type the number of large rooms you need an Ultra Carpet Clean: ";
+            if(std::cin >> clientNumberOfLargeRooms){
+                cost = (chargePerSmallRoom * clientNumberOfSmallRooms) + (chargePerLargeRoom * clientNumberOfLargeRooms);
+                std::cout << "Price per small room: $" << chargePerSmallRoom << "\nPrice per large room: $" << chargePerLargeRoom << std::endl;
+                std::cout << "Cost: $" << cost << "\nSales Tax: $" << salesTax * cost << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << "Total estimate: $" << Total(clientNumberOfSmallRooms, clientNumberOfLargeRooms) << "\nThis estimate is valid for " << estimateValidity << " days." << std::endl;
+            } else {
+                std::cout << "[ERROR] Invalid input! Closing application..." << std::endl;
+                return 1;
+            }
+
+            std::cout << "Would you like to confirm your purchase?\n Yes[Y] or No[N]" << std::endl;
+
             // Checks if user payment confirmation is Y or YES to proceed to payment session
             if(std::cin >> userPaymentConfirmation){
                 if(toUpperCase(userPaymentConfirmation) == "Y" || toUpperCase(userPaymentConfirmation) == "YES"){
@@ -75,12 +86,12 @@ int main()
 }
 
 // Calculate the total value of the service for an specific number of rooms
-float Rooms(unsigned int rooms)
+float Total(unsigned int smallRooms, unsigned int largeRooms)
 {
     float value {0};
 
     // Multiplies the number of rooms with charge per room them applies a fee of 6%
-    value = (rooms * chargePerRoom) * salesTax;
+    value = ((smallRooms * chargePerSmallRoom) + (largeRooms * chargePerLargeRoom)) * (1 + salesTax);
     return value;
 }
 
