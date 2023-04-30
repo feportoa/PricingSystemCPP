@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <cmath>
 
-const float chargePerSmallRoom {25};
-const float chargePerLargeRoom {35};
-const float salesTax {0.06};
+const float chargePerSmallRoom {25.0F};
+const float chargePerLargeRoom {35.0F};
+const float salesTax {0.06F};
 const int estimateValidity {30};
 
 float Total(unsigned int smallRooms, unsigned int largeRooms);
@@ -26,7 +26,7 @@ int main()
     if(userChosenOption == 1){ // Problems handling float/double injection
         unsigned int clientNumberOfSmallRooms {0}; 
         unsigned int clientNumberOfLargeRooms {0};
-        float cost {0};
+        float cost {0.0F};
         std::string userPaymentConfirmation {"Y"};
 
         std::cout << "Type the number of small rooms you need an Ultra Carpet Clean: ";
@@ -88,7 +88,7 @@ int main()
 // Calculate the total value of the service for an specific number of rooms
 float Total(unsigned int smallRooms, unsigned int largeRooms)
 {
-    float value {0};
+    float value {0.0F};
 
     // Multiplies the number of rooms with charge per room them applies a fee of 6%
     value = ((smallRooms * chargePerSmallRoom) + (largeRooms * chargePerLargeRoom)) * (1 + salesTax);
