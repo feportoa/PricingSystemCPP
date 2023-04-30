@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <cmath>
 
-const int chargePerRoom {30};
+const float chargePerRoom {30};
 const float salesTax {1.06}; // 6% fee (6 /100 = 0.06 + 100% = 1.06)
 
 float Rooms(unsigned int rooms);
